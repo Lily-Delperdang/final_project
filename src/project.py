@@ -1,14 +1,14 @@
 from pygame import Rect
 
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 1280*1.2 #1536
+HEIGHT = 720*1.2 #864
 
-main_box = Rect(0, 0, 820, 240)
-timer_box = Rect(0, 0, 240, 240)
-answer_box1 = Rect(0, 0, 495, 165)
-answer_box2 = Rect(0, 0, 495, 165)
-answer_box3 = Rect(0, 0, 495, 165)
-answer_box4 = Rect(0, 0, 495, 165)
+main_box = Rect(0, 0, 820*1.2, 240*1.2)
+timer_box = Rect(0, 0, 240*1.2, 240*1.2)
+answer_box1 = Rect(0, 0, 495*1.2, 165*1.2) #Rect(0, 0, 594, 198)
+answer_box2 = Rect(0, 0, 495*1.2, 165*1.2)
+answer_box3 = Rect(0, 0, 495*1.2, 165*1.2)
+answer_box4 = Rect(0, 0, 495*1.2, 165*1.2)
 
 main_box.move_ip(50, 40)
 timer_box.move_ip(990, 40)
@@ -52,7 +52,7 @@ q14 = ["Who created the first animated film, 'Humorous Phases of Funny Faces'?",
 q15 = ["Who created Computer Animated Hand (1972), the first animation of a 3D mesh?", 
        "David Evans & Ivan Sutherland", "John Whitney Jr.", "Gary Demos", "Ed Catmull & Fred Parke", 4]
 
-questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q14, q15]
+questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15]
 question = questions.pop()
 
 def draw():
@@ -64,11 +64,11 @@ def draw():
         screen.draw.filled_rect(box, "gold")
 
     screen.draw.textbox(str(time_left), timer_box, color=("dark slate blue"))
-    screen.draw.textbox(question[0], main_box, color=("dark blue"))
+    screen.draw.textbox(question[0], main_box, color=("dark blue"), align="center")
 
     index = 1
     for box in answer_boxes:
-        screen.draw.textbox(question[index], box, color =("medium slate blue"))
+        screen.draw.textbox(question[index], box, color =("medium slate blue"), align="center")
         index = index + 1
 
 def confetti_animation():
