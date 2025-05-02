@@ -30,7 +30,7 @@ q3 = ["Who directed 'A Trip to the Moon', the 1902 science-fiction film?",
 q4 = ["Which is NOT a type of animation?", 
       "Anime", "Stop-motion", "3D animation", "Hand drawn animation", 1]
 q5 = ["The following are all principles of design EXCEPT:", 
-      "Repetition", "Line of Action", "Contrast", "Hierarchy", 2]
+      "Repetition", "Rule of thirds", "Contrast", "Hierarchy", 2]
 q6 = ["What makes a good pose?", 
       "Line of action", "Clear silhouette", "Contrasting shapes", "All of these", 4]
 q7 = ["Which software application is commonly used for creating Motion Graphics?", 
@@ -82,6 +82,8 @@ def on_mouse_down(pos):
             if index == question[5]:
                 print("You got it right!")
                 correct_answer()
+                #else
+                #   game_over()
         index = index + 1
 
 def game_over():
@@ -96,10 +98,18 @@ def correct_answer():
     score = score + 1
     if questions:
         question = questions.pop(0)
-        time_left = 10
+        time_left = 15
     else:
         print("End of questions")
         game_over()
 
 def update_time_left():
-    pass
+    global time_left
+    
+    if time_left:
+        time_left = time_left - 1
+    
+    else:
+        game_over()
+
+clock.schedule_interval(update_time_left, 1.0)
