@@ -11,11 +11,11 @@ answer_box3 = Rect(0, 0, 495*1.2, 165*1.2)
 answer_box4 = Rect(0, 0, 495*1.2, 165*1.2)
 
 main_box.move_ip(50, 40)
-timer_box.move_ip(990, 40)
-answer_box1.move_ip(90, 338)
-answer_box2.move_ip(695, 338)
-answer_box3.move_ip(90, 528)
-answer_box4.move_ip(695, 528)
+timer_box.move_ip(990*1.2, 40)
+answer_box1.move_ip(90*1.2, 338*1.2)
+answer_box2.move_ip(695*1.2, 338*1.2)
+answer_box3.move_ip(90*1.2, 528*1.2)
+answer_box4.move_ip(695*1.2, 528*1.2)
 answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 
 score = 0
@@ -54,14 +54,15 @@ q15 = ["Who created Computer Animated Hand (1972), the first animation of a 3D m
 
 questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15]
 question = questions.pop()
+box_colors = ["gold", "gold", "gold", "gold"]
 
 def draw():
     screen.fill((224, 255, 255))
     screen.draw.filled_rect(main_box, "sky blue")
     screen.draw.filled_rect(timer_box, "plum")
-
-    for box in answer_boxes:
-        screen.draw.filled_rect(box, "gold")
+    
+    for i, box in enumerate(answer_boxes):
+        screen.draw.filled_rect(box, box_colors[i])
 
     screen.draw.textbox(str(time_left), timer_box, color=("dark slate blue"))
     screen.draw.textbox(question[0], main_box, color=("dark blue"), align="center")
@@ -69,22 +70,25 @@ def draw():
     index = 1
     for box in answer_boxes:
         screen.draw.textbox(question[index], box, color =("medium slate blue"), align="center")
-        index = index + 1
+        index += 1
 
 def confetti_animation():
     pass
 
 def on_mouse_down(pos):
+    global box_colors
     index = 1
-    for box in answer_boxes:
+    for i, box in enumerate(answer_boxes):
         if box.collidepoint(pos):
             print("Clicked on answer " + str(index))
             if index == question[5]:
                 print("You got it right!")
                 correct_answer()
-                #else
-                #   game_over()
-        index = index + 1
+            else:
+                print("Wrong answer!")
+                box_colors[i] = "pink"
+
+        index +=1
 
 def game_over():
     global question, time_left
@@ -93,9 +97,11 @@ def game_over():
     time_left = 0
 
 def correct_answer():
-    global question, score, time_left
-    
-    score = score + 1
+    global question, score, time_left, box_colors
+
+    score += 1
+    box_colors = ["gold", "gold", "gold", "gold"]
+
     if questions:
         question = questions.pop(0)
         time_left = 15
