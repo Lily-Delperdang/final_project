@@ -1,4 +1,5 @@
 from pygame import Rect
+import random
 
 WIDTH = 1280*1.2 #1536
 HEIGHT = 720*1.2 #864
@@ -52,7 +53,9 @@ q14 = ["Who created the first animated film, 'Humorous Phases of Funny Faces'?",
 q15 = ["Who created Computer Animated Hand (1972), the first animation of a 3D mesh?", 
        "David Evans & Ivan Sutherland", "John Whitney Jr.", "Gary Demos", "Ed Catmull & Fred Parke", 4]
 
-questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15]
+question_list = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15]
+questions = question_list.copy()
+random.shuffle(questions)
 question = questions.pop()
 box_colors = ["gold", "gold", "gold", "gold"]
 
@@ -91,10 +94,13 @@ def on_mouse_down(pos):
         index +=1
 
 def game_over():
-    global question, time_left
-    message = "Game over. You got %s questions correct" % str(score)
+    global question, time_left, questions
+    message = "Game over! You got %s questions correct" % str(score)
     question = [message, "-", "-", "-", "-", 5]
     time_left = 0
+
+    questions = question_list.copy()
+    random.shuffle(questions)
 
 def correct_answer():
     global question, score, time_left, box_colors
