@@ -21,6 +21,9 @@ answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 
 score = 0
 time_left = 10
+game_has_ended = False
+end_message = ""
+
 
 q1 = ["The following people helped create the 12 principles of animation EXCEPT:",
        "Frank Thomas", "Milt Kahl", "Brian Froud", "Ollie Johnston", 3]
@@ -61,6 +64,14 @@ box_colors = ["gold", "gold", "gold", "gold"]
 
 def draw():
     screen.fill((224, 255, 255))
+
+    if game_has_ended:
+        end_box = Rect(0, 0, WIDTH * 0.8, HEIGHT * 0.5)
+        end_box.center = (WIDTH // 2, HEIGHT // 2)
+        screen.draw.filled_rect(end_box, "goldenrod")
+        screen.draw.textbox(end_message, end_box, color="white", align="center")
+        return  
+
     screen.draw.filled_rect(main_box, "sky blue")
     screen.draw.filled_rect(timer_box, "plum")
     
@@ -94,9 +105,10 @@ def on_mouse_down(pos):
         index +=1
 
 def game_over():
-    global question, time_left, questions
-    message = "Game over! You got %s questions correct" % str(score)
-    question = [message, "-", "-", "-", "-", 5]
+    global game_has_ended, end_message, questions, time_left
+
+    end_message = "Game over! You got %s questions correct" % str(score)
+    game_has_ended = True
     time_left = 0
 
     questions = question_list.copy()
