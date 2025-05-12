@@ -63,7 +63,7 @@ q6 = ["What makes a good pose?",
 q7 = ["Which software application is commonly used for creating Motion Graphics?", 
       "Adobe After Effects", "Unity", "Adobe Photoshop", "ZBrush", 1]
 q8 = ["Which best describes graphic designer Saul Bass's style?", 
-      "Calm with light colors", "Realistic with little typhography", "Minimalistic and colorless", "Simple, geometric, with eye-catching color", 4]
+      "Simple, geometric, with eye-catching color", "Calm with light colors", "Minimalistic and colorless", "Realistic with very little typhography", 1]
 q9 = ["Which is the first animated feature film?",
        "Steamboat Willie (1928)", "Snow White (1937)", "Sleeping Beauty (1959)", "Gertie the Dinosaur (1914)", 2]
 q10 = ["What was the first feature length movie to integrate 3D CGI?", 
@@ -124,8 +124,8 @@ def confetti_animation():
         for _ in range(100):
             x = random.randint(0, WIDTH)
             y = random.randint(-HEIGHT, 0)
-            speed_y = random.randint(8, 12)
-            size = random.randint(5, 7)
+            speed_y = random.randint(20, 30) #change back to (4, 8) if too fast
+            size = random.randint(6, 9)
             color = random.choice(confetti_colors)
             confetti_list.append([x, y, speed_y, size, color])
 
@@ -190,10 +190,12 @@ def correct_answer():
 
 def update_time_left():
     global time_left
-    
+
+    if game_has_ended or game_is_won:
+        return
+
     if time_left:
-        time_left = time_left - 1
-    
+        time_left -= 1
     else:
         game_over()
 
