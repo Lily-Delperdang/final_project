@@ -22,6 +22,7 @@ answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 score = 0
 time_left = 10
 game_has_ended = False
+game_is_won = False
 end_message = ""
 
 
@@ -68,9 +69,16 @@ def draw():
     if game_has_ended:
         end_box = Rect(0, 0, WIDTH * 0.8, HEIGHT * 0.5)
         end_box.center = (WIDTH // 2, HEIGHT // 2)
-        screen.draw.filled_rect(end_box, "goldenrod")
+        screen.draw.filled_rect(end_box, "orchid")
         screen.draw.textbox(end_message, end_box, color="white", align="center")
-        return  
+        return 
+
+    if game_is_won:
+        end_box = Rect(0, 0, WIDTH * 0.8, HEIGHT * 0.5)
+        end_box.center = (WIDTH // 2, HEIGHT // 2)
+        screen.draw.filled_rect(end_box, (255, 180, 10))
+        screen.draw.textbox(end_message, end_box, color="white", align="center")
+        return
 
     screen.draw.filled_rect(main_box, "sky blue")
     screen.draw.filled_rect(timer_box, "plum")
@@ -104,11 +112,22 @@ def on_mouse_down(pos):
 
         index +=1
 
-def game_over():
-    global game_has_ended, end_message, questions, time_left
+def game_won():
+    global game_is_won, game_has_ended, end_message, questions, time_left
 
-    end_message = "Game over! You got %s questions correct" % str(score)
+    end_message = "You won! You got %s questions correct" % str(score)
+    game_is_won = True
+    game_has_ended = False
+
+    questions = question_list.copy()
+    random.shuffle(questions)
+
+def game_over():
+    global game_is_won, game_has_ended, end_message, questions, time_left
+
+    end_message = "Game over. You got %s questions correct" % str(score)
     game_has_ended = True
+    game_is_won = False
     time_left = 0
 
     questions = question_list.copy()
@@ -125,7 +144,7 @@ def correct_answer():
         time_left = 15
     else:
         print("End of questions")
-        game_over()
+        game_won()
 
 def update_time_left():
     global time_left
