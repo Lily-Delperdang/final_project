@@ -1,6 +1,26 @@
 from pygame import Rect
 import random
 
+WIDTH = 1280
+HEIGHT = 720
+
+main_box = Rect(0, 0, 820, 240)
+timer_box = Rect(0, 0, 240, 240)
+answer_box1 = Rect(0, 0, 495, 165)
+answer_box2 = Rect(0, 0, 495, 165)
+answer_box3 = Rect(0, 0, 495, 165)
+answer_box4 = Rect(0, 0, 495, 165)
+
+main_box.move_ip(50, 40)
+timer_box.move_ip(990, 40)
+answer_box1.move_ip(90, 338)
+answer_box2.move_ip(695, 338)
+answer_box3.move_ip(90, 528)
+answer_box4.move_ip(695, 528)
+answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
+
+# Resized to be 20% bigger
+'''
 WIDTH = 1280*1.2 #1536
 HEIGHT = 720*1.2 #864
 
@@ -18,13 +38,15 @@ answer_box2.move_ip(695*1.2, 338*1.2)
 answer_box3.move_ip(90*1.2, 528*1.2)
 answer_box4.move_ip(695*1.2, 528*1.2)
 answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
-
+'''
 score = 0
 time_left = 10
 game_has_ended = False
 game_is_won = False
 end_message = ""
 
+confetti_colors = ["sky blue", "pink", "gold", "lavender", (150, 110, 240)]
+confetti_list = []
 
 q1 = ["The following people helped create the 12 principles of animation EXCEPT:",
        "Frank Thomas", "Milt Kahl", "Brian Froud", "Ollie Johnston", 3]
@@ -78,6 +100,7 @@ def draw():
         end_box.center = (WIDTH // 2, HEIGHT // 2)
         screen.draw.filled_rect(end_box, (255, 180, 10))
         screen.draw.textbox(end_message, end_box, color="white", align="center")
+        confetti_animation()
         return
 
     screen.draw.filled_rect(main_box, "sky blue")
@@ -95,7 +118,26 @@ def draw():
         index += 1
 
 def confetti_animation():
-    pass
+    global confetti_list
+
+    if not confetti_list:
+        for _ in range(100):
+            x = random.randint(0, WIDTH)
+            y = random.randint(-HEIGHT, 0)
+            speed_y = random.randint(8, 12)
+            size = random.randint(5, 7)
+            color = random.choice(confetti_colors)
+            confetti_list.append([x, y, speed_y, size, color])
+
+    for confetti in confetti_list:
+        confetti[1] += confetti[2]  # Move down
+
+        if confetti[1] > HEIGHT:
+            confetti[0] = random.randint(0, WIDTH)
+            confetti[1] = random.randint(-50, -10)
+
+        screen.draw.filled_circle((confetti[0], confetti[1]), confetti[3], confetti[4])
+
 
 def on_mouse_down(pos):
     global box_colors
@@ -156,3 +198,4 @@ def update_time_left():
         game_over()
 
 clock.schedule_interval(update_time_left, 1.0)
+

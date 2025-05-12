@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Confetti Animation")
 
 # Confetti colors
-confetti_colors = ["sky blue", "pink", "gold", "lavender", (150, 110, 240)]
+colors = ["sky blue", "pink", "gold", "lavender", (150, 110, 240)]
 
 # Confetti list
 confetti_list = []
@@ -22,7 +22,7 @@ def create_confetti():
     y = random.randint(-height, 0)  # Start above screen
     speed_y = random.randint(2, 5)
     size = random.randint(3, 7)
-    color = random.choice(confetti_colors)
+    color = random.choice(colors)
     return [x, y, speed_y, size, color]
 
 # Create initial confetti
