@@ -1,5 +1,7 @@
 from pygame import Rect
 import random
+import pgzrun
+from pgzero import clock
 
 WIDTH = 1280
 HEIGHT = 720
@@ -19,26 +21,28 @@ answer_box3.move_ip(90, 528)
 answer_box4.move_ip(695, 528)
 answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 
-# Resized to be 20% bigger
 '''
-WIDTH = 1280*1.2 #1536
-HEIGHT = 720*1.2 #864
+# Resized to be 20% smaller
 
-main_box = Rect(0, 0, 820*1.2, 240*1.2)
-timer_box = Rect(0, 0, 240*1.2, 240*1.2)
-answer_box1 = Rect(0, 0, 495*1.2, 165*1.2) #Rect(0, 0, 594, 198)
-answer_box2 = Rect(0, 0, 495*1.2, 165*1.2)
-answer_box3 = Rect(0, 0, 495*1.2, 165*1.2)
-answer_box4 = Rect(0, 0, 495*1.2, 165*1.2)
+WIDTH = 1280/1.2 #1536
+HEIGHT = 720/1.2 #864
+
+main_box = Rect(0, 0, 820/1.2, 240/1.2)
+timer_box = Rect(0, 0, 240/1.2, 240/1.2)
+answer_box1 = Rect(0, 0, 495/1.2, 165/1.2) #Rect(0, 0, 594, 198)
+answer_box2 = Rect(0, 0, 495/1.2, 165/1.2)
+answer_box3 = Rect(0, 0, 495/1.2, 165/1.2)
+answer_box4 = Rect(0, 0, 495/1.2, 165/1.2)
 
 main_box.move_ip(50, 40)
-timer_box.move_ip(990*1.2, 40)
-answer_box1.move_ip(90*1.2, 338*1.2)
-answer_box2.move_ip(695*1.2, 338*1.2)
-answer_box3.move_ip(90*1.2, 528*1.2)
-answer_box4.move_ip(695*1.2, 528*1.2)
+timer_box.move_ip(990/1.2, 40)
+answer_box1.move_ip(90/1.2, 338/1.2)
+answer_box2.move_ip(695/1.2, 338/1.2)
+answer_box3.move_ip(90/1.2, 528/1.2)
+answer_box4.move_ip(695/1.2, 528/1.2)
 answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 '''
+
 score = 0
 time_left = 10
 game_has_ended = False
@@ -121,16 +125,16 @@ def confetti_animation():
     global confetti_list
 
     if not confetti_list:
-        for _ in range(100):
+        for _ in range(80):#change to 100 if fine
             x = random.randint(0, WIDTH)
             y = random.randint(-HEIGHT, 0)
-            speed_y = random.randint(20, 30) #change back to (4, 8) if too fast
+            speed_y = random.randint(25, 35) #change back to (4, 8) if too fast
             size = random.randint(6, 9)
             color = random.choice(confetti_colors)
             confetti_list.append([x, y, speed_y, size, color])
 
     for confetti in confetti_list:
-        confetti[1] += confetti[2]  # Move down
+        confetti[1] += confetti[2] 
 
         if confetti[1] > HEIGHT:
             confetti[0] = random.randint(0, WIDTH)
@@ -200,4 +204,5 @@ def update_time_left():
         game_over()
 
 clock.schedule_interval(update_time_left, 1.0)
+pgzrun.go()
 
